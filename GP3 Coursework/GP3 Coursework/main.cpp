@@ -19,6 +19,10 @@
 
 #define FONT_SZ 24
 
+//********************************************************//
+//WinMain is the first method called when the program runs//
+//********************************************************//
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, int cmdShow)
 {
 	//Set our window settings
@@ -53,75 +57,88 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		return 1;
 	}
 
+	//seed the random number generator
 	srand(time(NULL));
 
+	//load each model
+
+	//jigglypuff is the enemy model
 	cModelLoader jigglypuffMdl;
 	jigglypuffMdl.loadModel("Models/BR_Jigglypuff.obj");
 
+	//the blue falcon is the player model
 	cModelLoader falconMdl;
 	falconMdl.loadModel("Models/blue_falcon.obj"); // Player
 
+	//the dynamite is an obstacle model
 	cModelLoader theDynamite;
 	theDynamite.loadModel("Models/dinamite.obj");
 
+	//the laser is the ammunition model
 	cModelLoader theBolt;
 	theBolt.loadModel("Models/laser.obj");
 
+	//create a vector list of enemies as well as an iterator to go through the list
 	std::vector<cEnemy*> enemyList;
 	std::vector<cEnemy*>::iterator indexEnemy;
 
 	for (int loop = 0; loop < 10; loop++)
 	{
+		//for each of the ten enemies, declare them as an instance of cEnemy, give them Jigglypuff's model dimensions and randomise their positions on the screen
 		cEnemy* aEnemy = new cEnemy();
 		aEnemy->randomise();
 		aEnemy->setMdlDimensions(jigglypuffMdl.getModelDimensions());
 		enemyList.push_back(aEnemy);
 	}
 
+	//create a vector list of dynamite packs as well as an iterator to go through the list
 	std::vector<cEnemy*> dynamiteList;
 	std::vector<cEnemy*>::iterator indexDynamite;
 
 	for (int loop = 0; loop < 5; loop++)
 	{
+		//for each of the five dynamite packs, declare them as an instance of cEnemy, give them the dynamite's model dimensions and randomise their positions on the screen
 		cEnemy* aDynamite = new cEnemy();
 		aDynamite->randomise();
 		aDynamite->setMdlDimensions(theDynamite.getModelDimensions());
 		dynamiteList.push_back(aDynamite);
 	}
-
+	
+	//create the player object and instantiate it on the screen, scaling the model down from the regular large size
 	cPlayer thePlayer;
 	thePlayer.initialise(glm::vec3(0, 0, 0), 0.0f, glm::vec3(7, 7, 7), glm::vec3(0, 0, 0), 5.0f, true);
 	thePlayer.setMdlDimensions(falconMdl.getModelDimensions());
 
+	//create a vector list of lasers as well as an iterator to go through the list
 	std::vector<cLaser*> laserList;
 	std::vector<cLaser*>::iterator index;
 
 	// Load font
 	struct dtx_font *fntmain;
 
+	//specify the font that will be used to write the overlays
 	fntmain = dtx_open_font("Fonts/font.ttf", 0);
 	dtx_prepare_range(fntmain, FONT_SZ, 0, 256);             /* ASCII */
 
 	dtx_use_font(fntmain, FONT_SZ);
 
+	//instantiate, load and play the background music
 	cSound themeMusic;
 	themeMusic.createContext();
 	themeMusic.loadWAVFile("Audio/patel.wav");
 	themeMusic.playAudio(AL_LOOPING);
 
-	
-
-	//explosion
+	//instantiate and load the sound effect for hitting Jigglypuff or a dynamite pack
 	cSound explosionFX;
 	//explosionFX.createContext();
 	explosionFX.loadWAVFile("Audio/feelingit.wav");
 
-	//firing sound
+	//instantiate and load the sound effect for shooting the laser
 	cSound firingFX;
 	//firingFX.createContext();
 	firingFX.loadWAVFile("Audio/shot.wav");
 
-	//death sound
+	//instantiate and load the sound effect for getting hit by the dynamite
 	cSound deathFX;
 	//deathFX.createContext();
 	deathFX.loadWAVFile("Audio/goofy.wav");
@@ -141,9 +158,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		glLoadIdentity();
 		if (topDown == true)
 		{
+			//if Q has been pressed while in the first person camera, switch to the top down camera
+			//200 refers to the zoom, the eye is 200 units on the Y away from the camera's target
+			//1 refers to the up vector on the Z axis
 			gluLookAt(0, 200, 0, 0, 0, 0, 0, 0, 1);
 		}
-		else{
+		else
+		{
+			//if Q has been pressed while in the top down camera, switch to the first person camera
+			//FPScam is an object created to always rotate with where the player is facing
+			//pos is an object created to always stay on the player's position
+			//combined, the two objects produce a lookAt that follows the front of the ship
+			//3 is an arbitrary integer to move the eye's view back so that the view is the "pilot"'s rather than the front of the ship
 			glm::vec3 FPScam;
 			FPScam.x = -(float)glm::sin(glm::radians(thePlayer.getRotation()));
 			FPScam.y = 0.0f;
@@ -158,30 +184,38 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 
 		for (indexEnemy = enemyList.begin(); indexEnemy != enemyList.end(); ++indexEnemy)
 		{
-			//glScalef(3, 3, 3);
+			//render and update each Jigglypuff in the enemy list
 			jigglypuffMdl.renderMdl((*indexEnemy)->getPosition(), (*indexEnemy)->getRotation(), (*indexEnemy)->getScale());
 			(*indexEnemy)->update(elapsedTime);
 
 		}
 		for (indexDynamite = dynamiteList.begin(); indexDynamite != dynamiteList.end(); ++indexDynamite)
 		{
-			//glScalef(3, 3, 3);
+			//render and update each dynamite pack in the enemy list
 			theDynamite.renderMdl((*indexDynamite)->getPosition(), (*indexDynamite)->getRotation(), (*indexDynamite)->getScale());
 			(*indexDynamite)->update(elapsedTime);
 
 		}
+
+		//render and update the player
 		falconMdl.renderMdl(thePlayer.getPosition(), thePlayer.getRotation(), thePlayer.getScale());
 		thePlayer.update(elapsedTime);
 
 		// Load Sound
 		if (bgmPlaying == false)
 		{
+			//if E was pressed while the background music wasn't playing
 			themeMusic.playAudio(AL_FALSE);
 		}
 
 		////are we shooting?
 		if (fire && dead == false)
 		{
+			//if we're shooting and we're not dead, instantiate a laser object
+			//give the object a direction and rotation based on where the player is facing using sine and cosine
+			//scale the laser and add the firing speed
+			//push the laser back in the list and set fire to false
+			//play the firing sound effect
 			cLaser* laser = new cLaser();
 			glm::vec3 mdlLaserDirection;
 			mdlLaserDirection.x = -(float)glm::sin(glm::radians(thePlayer.getRotation()));
@@ -204,15 +238,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 
 		for (index = laserList.begin(); index != laserList.end(); ++index)
 		{
+			//for each laser in the list
 			if ((*index)->isActive())
 			{
+				//if the laser is still active, update and render it
 				theBolt.renderMdl((*index)->getPosition(), (*index)->getRotation(), (*index)->getScale());
 				(*index)->update(elapsedTime);
 				// check for collisions
 				for (indexEnemy = enemyList.begin(); indexEnemy != enemyList.end(); ++indexEnemy)
 				{
+					//for each Jigglypuff in the enemy list
 					if ((*index)->SphereSphereCollision((*indexEnemy)->getPosition(), (*indexEnemy)->getMdlRadius()))
 					{
+						//if the bounding spheres have collided for the laser and the Jigglypuff the two iterators are pointing to
+						//set them each to inactive
+						//add one to the player's score and play the hit target audio
 						(*index)->setIsActive(false);
 						(*indexEnemy)->setIsActive(false);
 						score = score + 1;
@@ -223,11 +263,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 				}
 				for (indexDynamite = dynamiteList.begin(); indexDynamite != dynamiteList.end(); ++indexDynamite)
 				{
+					//for each dynamite in the list
 					if ((*index)->SphereSphereCollision((*indexDynamite)->getPosition(), (*indexDynamite)->getMdlRadius()))
 					{
+						//if the bounding spheres have collided for the laser and the dynamite pack the two iterators are pointing to
+						//set them each to inactive
+						//and play the hit target audio
 						(*index)->setIsActive(false);
 						(*indexDynamite)->setIsActive(false);
-
 						explosionFX.playAudio(AL_FALSE);
 						break; // No need to check for other bullets.
 					}
@@ -238,8 +281,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 
 		for (indexDynamite = dynamiteList.begin(); indexDynamite != dynamiteList.end(); ++indexDynamite)
 		{
+			//for each dynamite pack in the dynamite list
 			if ((*indexDynamite)->SphereSphereCollision(thePlayer.getPosition(), thePlayer.getMdlRadius()))
 			{
+				//if the bounding spheres have collided for the dynamite pack the iterator is pointing to and the player
+				//set the dynamite pack to inactive
+				//reduce our health by one and play the hit audio
 				(*indexDynamite)->setIsActive(false);
 				health = health - 1;
 				deathFX.playAudio(AL_FALSE);
@@ -248,48 +295,62 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 
 		}
 
-		if (health == 0){
+		if (health == 0)
+		{
+			//if we've ran out of health we are dead
 			dead = true;
 		}
 
+		//start at the beginning of the laser list
 		index = laserList.begin();
 		while (index != laserList.end())
 		{
+			//while we are still in the laser list
 			if ((*index)->isActive() == false)
 			{
+				//if the laser the iterator is pointing to is inactive, erase it from the list
 				index = laserList.erase(index);
 			}
 			else
 			{
+				//otherwise move on to the next one
 				++index;
 			}
 		}
+
+		//start at the beginning of the Jigglypuff list
 		indexEnemy = enemyList.begin();
 		while (indexEnemy != enemyList.end())
 		{
+			//while we are still in the Jigglypuff list
 			if ((*indexEnemy)->isActive() == false)
 			{
+				//if the Jigglypuff the iterator is pointing to is inactive, erase it from the list
 				indexEnemy = enemyList.erase(indexEnemy);
 			}
 			else
 			{
+				//otherwise move on to the next one
 				++indexEnemy;
 			}
 		}
+
+		//start at the beginning of the dynamite list
 		indexDynamite = dynamiteList.begin();
 		while (indexDynamite != dynamiteList.end())
 		{
+			//while we are still in the dynamite list
 			if ((*indexDynamite)->isActive() == false)
 			{
+				//if the dynamite the iterator is pointing to is inactive, erase it from the list
 				indexDynamite = dynamiteList.erase(indexDynamite);
 			}
 			else
 			{
+				//otherwise move on to the next one
 				++indexDynamite;
 			}
 		}
-
-
 
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
@@ -301,40 +362,49 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		glPushAttrib(GL_DEPTH_TEST);
 		glDisable(GL_DEPTH_TEST);
 
+		//set the first string overlay at this position
+		//it is a constant string so that the game's output can use it to display
+		//this first one represents the score
 		glTranslatef(0, 720, 0);
-
-
 		std::string scoreString = "Dead Jigglypuffs: " + std::to_string(score);
 		char const *ourScore = scoreString.c_str();
 		dtx_string(ourScore);
 
+		//this translate is relative to the first string
+		//this string represents our health
 		glTranslatef(800, 0, 0);
-
 		std::string healthString = "Blue Falcon Health: " + std::to_string(health);
 		char const *ourHealth = healthString.c_str();
 		dtx_string(ourHealth);
 
+		//this translate is relative to the second string
+		//this string represents a message to the player
 		glTranslatef(-600, -50, 0);
-
-		if (dead == false && score < 10){
+		if (dead == false && score < 10)
+		{
+			//if we aren't dead and we haven't killed all the enemies
+			//display the controls
 			std::string instructString = "SPACE to fire, Q to toggle cameras and E to toggle background music!";
 			char const *Controls = instructString.c_str();
 			dtx_string(Controls);
 		}
 
-		if (dead == true){
+		if (dead == true)
+		{
+			//if we died display a message to the player instead of the controls
 			std::string instructString = "You are dead. The Jigglypuffs will taste blood tonight.";
 			char const *Controls = instructString.c_str();
 			dtx_string(Controls);
 		}
 
-		if (score >= 10){
+		if (score >= 10)
+		{
+			//if we killed all the Jigglypuffs display a message to the player instead of the controls
 			std::string instructString = "You monster, all they wanted to do was spread music.";
 			char const *Controls = instructString.c_str();
 			dtx_string(Controls);
 		}
 		
-
 		glMatrixMode(GL_PROJECTION);
 		glPopMatrix();
 		glMatrixMode(GL_MODELVIEW);

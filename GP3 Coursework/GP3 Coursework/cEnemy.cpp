@@ -9,10 +9,13 @@ void cEnemy::randomise()
 {
 	if (rand() % 2 == 0)
 	{
+		//these playfield variables define the boundaries of the game
+		//left wall if the enemy was positioned on the left
 		cModel::m_mdlPosition.x = -PLAYFIELDX + 2.0f;
 	}
 	else
 	{
+		//right wall if the enemy was positioned on the right
 		cModel::m_mdlPosition.x = PLAYFIELDX - 2.0f;
 	}
 	cModel::m_mdlPosition.y = 0.0f;

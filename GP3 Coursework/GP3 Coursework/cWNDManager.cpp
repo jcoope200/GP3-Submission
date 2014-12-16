@@ -234,30 +234,6 @@ LRESULT CALLBACK cWNDManager::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
 		{
 			DestroyWindow(pInstance->m_hwnd); //Send a WM_DESTROY message
 		}
-
-		if (wParam == 'd' || wParam == 'D')  //If d or D was pressed
-		{
-			drawMode = ++drawMode % 3;
-			if (drawMode == 0)        // fill mode
-			{
-				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-				glEnable(GL_DEPTH_TEST);
-				glEnable(GL_CULL_FACE);
-			}
-			else if (drawMode == 1)  // wireframe mode
-			{
-				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-				glDisable(GL_DEPTH_TEST);
-				glDisable(GL_CULL_FACE);
-			}
-			else                    // point mode
-			{
-				glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
-				glDisable(GL_DEPTH_TEST);
-				glDisable(GL_CULL_FACE);
-			}
-			break;
-		}
 		if (wParam == VK_LEFT) //If the Left Arrow key was pressed
 		{
 			rotationAngle += 5; //Increase rotation Angle
@@ -280,25 +256,34 @@ LRESULT CALLBACK cWNDManager::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
 		}
 		if (wParam == VK_SPACE) //If the Down Arrow key was pressed
 		{
+			//fire a shot
 			fire = true;
 		}
-		if (wParam == 'q' || wParam == 'Q')
+		if (wParam == 'q' || wParam == 'Q') //If the Q key was pressed
 		{
-			if (topDown == false){
+			if (topDown == false)
+			{
+				//switch to the top down camera
 				topDown = true;
 				break;
 			}
-			if (topDown == true){
+			if (topDown == true)
+			{
+				//switch to the first person camera
 				topDown = false;
 			}
 		}
-		if (wParam == 'e' || wParam == 'E')
+		if (wParam == 'e' || wParam == 'E') //If the E key was pressed
 		{
-			if (bgmPlaying == false){
+			if (bgmPlaying == false)
+			{
+				//if we're not playing the background music then play it
 				bgmPlaying = true;
 				break;
 			}
-			if (bgmPlaying == true){
+			if (bgmPlaying == true)
+			{
+				//if we're playing the background music then stop it
 				bgmPlaying = false;
 				break;
 			}
