@@ -316,7 +316,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 
 		glTranslatef(-600, -50, 0);
 
-		if (dead == false){
+		if (dead == false && score < 10){
 			std::string instructString = "SPACE to fire, Q to toggle cameras and E to toggle background music!";
 			char const *Controls = instructString.c_str();
 			dtx_string(Controls);
@@ -324,6 +324,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 
 		if (dead == true){
 			std::string instructString = "You are dead. The Jigglypuffs will taste blood tonight.";
+			char const *Controls = instructString.c_str();
+			dtx_string(Controls);
+		}
+
+		if (score >= 10){
+			std::string instructString = "You monster, all they wanted to do was spread music.";
 			char const *Controls = instructString.c_str();
 			dtx_string(Controls);
 		}
