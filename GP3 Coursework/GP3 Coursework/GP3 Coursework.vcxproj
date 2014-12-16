@@ -65,18 +65,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\lab9 collision\lab9 collision\cLaser.cpp" />
-    <ClCompile Include="..\..\lab9 collision\lab9 collision\cModel.cpp" />
-    <ClCompile Include="..\..\lab9 collision\lab9 collision\cModelLoader.cpp" />
-    <ClCompile Include="..\..\lab9 collision\lab9 collision\cPlayer.cpp" />
-    <ClCompile Include="..\..\lab9 collision\lab9 collision\cSound.cpp" />
-    <ClCompile Include="..\..\lab9 collision\lab9 collision\cWNDManager.cpp" />
-    <ClCompile Include="..\..\lab9 collision\lab9 collision\GameConstants.cpp" />
-    <ClCompile Include="..\..\lab9 collision\lab9 collision\windowOGL.cpp" />
-    <ClCompile Include="cEnemy.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\..\lab9 collision\lab9 collision\wglext.h" />
     <ClInclude Include="cEnemy.h" />
     <ClInclude Include="cLaser.h" />
@@ -87,6 +75,18 @@
     <ClInclude Include="GameConstants.h" />
     <ClInclude Include="cModel.h" />
     <ClInclude Include="windowOGL.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cEnemy.cpp" />
+    <ClCompile Include="cLaser.cpp" />
+    <ClCompile Include="cModel.cpp" />
+    <ClCompile Include="cModelLoader.cpp" />
+    <ClCompile Include="cPlayer.cpp" />
+    <ClCompile Include="cSound.cpp" />
+    <ClCompile Include="cWNDManager.cpp" />
+    <ClCompile Include="GameConstants.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="windowOGL.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

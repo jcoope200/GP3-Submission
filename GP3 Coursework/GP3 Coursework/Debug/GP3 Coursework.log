@@ -1,29 +1,36 @@
-﻿Build started 16/12/2014 16:18:25.
+﻿Build started 16/12/2014 16:48:16.
      1>Project "C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\GP3 Coursework\GP3 Coursework.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "..\..\lab9 collision\lab9 collision\cLaser.cpp" "..\..\lab9 collision\lab9 collision\cModel.cpp" "..\..\lab9 collision\lab9 collision\cModelLoader.cpp" "..\..\lab9 collision\lab9 collision\cPlayer.cpp" "..\..\lab9 collision\lab9 collision\cSound.cpp" "..\..\lab9 collision\lab9 collision\cWNDManager.cpp" "..\..\lab9 collision\lab9 collision\GameConstants.cpp" "..\..\lab9 collision\lab9 collision\windowOGL.cpp" cEnemy.cpp main.cpp
-         main.cpp
-     1>c:\users\owner\documents\github\gp3-submission\gp3 coursework\gp3 coursework\main.cpp(110): warning C4309: 'argument' : truncation of constant value
-         cEnemy.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt cLaser.cpp cModel.cpp cModelLoader.cpp cPlayer.cpp cSound.cpp cWNDManager.cpp GameConstants.cpp windowOGL.cpp
          windowOGL.cpp
-     1>c1xx : fatal error C1083: Cannot open source file: '..\..\lab9 collision\lab9 collision\windowOGL.cpp': No such file or directory
          GameConstants.cpp
-     1>c1xx : fatal error C1083: Cannot open source file: '..\..\lab9 collision\lab9 collision\GameConstants.cpp': No such file or directory
          cWNDManager.cpp
-     1>c1xx : fatal error C1083: Cannot open source file: '..\..\lab9 collision\lab9 collision\cWNDManager.cpp': No such file or directory
          cSound.cpp
-     1>c1xx : fatal error C1083: Cannot open source file: '..\..\lab9 collision\lab9 collision\cSound.cpp': No such file or directory
          cPlayer.cpp
-     1>c1xx : fatal error C1083: Cannot open source file: '..\..\lab9 collision\lab9 collision\cPlayer.cpp': No such file or directory
          cModelLoader.cpp
-     1>c1xx : fatal error C1083: Cannot open source file: '..\..\lab9 collision\lab9 collision\cModelLoader.cpp': No such file or directory
          cModel.cpp
-     1>c1xx : fatal error C1083: Cannot open source file: '..\..\lab9 collision\lab9 collision\cModel.cpp': No such file or directory
          cLaser.cpp
-     1>c1xx : fatal error C1083: Cannot open source file: '..\..\lab9 collision\lab9 collision\cLaser.cpp': No such file or directory
          Generating Code...
-     1>Done Building Project "C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\GP3 Coursework\GP3 Coursework.vcxproj" (Build target(s)) -- FAILED.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\Debug\GP3 Coursework.exe" /INCREMENTAL /NOLOGO glut32.lib "glm-0.3.2Lib.lib" libdrawtext.lib glew32.lib glew32s.lib freetype.lib OpenAL32.lib alut.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\Debug\GP3 Coursework.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\Debug\GP3 Coursework.lib" /MACHINE:X86 Debug\cEnemy.obj
+         Debug\cLaser.obj
+         Debug\cModel.obj
+         Debug\cModelLoader.obj
+         Debug\cPlayer.obj
+         Debug\cSound.obj
+         Debug\cWNDManager.obj
+         Debug\GameConstants.obj
+         Debug\main.obj
+         Debug\windowOGL.obj
+     1>glm-0.3.2Lib.lib(glm.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glm-0.3.2Lib.lib(glm.obj)' or at 'C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\Debug\vc120.pdb'; linking object as if no debug info
+     1>glm-0.3.2Lib.lib(glmimg.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glm-0.3.2Lib.lib(glmimg.obj)' or at 'C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\Debug\vc120.pdb'; linking object as if no debug info
+     1>glm-0.3.2Lib.lib(glm_util.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glm-0.3.2Lib.lib(glm_util.obj)' or at 'C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\Debug\vc120.pdb'; linking object as if no debug info
+     1>libdrawtext.lib(drawgl.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'libdrawtext.lib(drawgl.obj)' or at 'C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\Debug\vc120.pdb'; linking object as if no debug info
+     1>libdrawtext.lib(font.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'libdrawtext.lib(font.obj)' or at 'C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\Debug\vc120.pdb'; linking object as if no debug info
+     1>libdrawtext.lib(utf8.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'libdrawtext.lib(utf8.obj)' or at 'C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\Debug\vc120.pdb'; linking object as if no debug info
+         GP3 Coursework.vcxproj -> C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\Debug\GP3 Coursework.exe
+     1>Done Building Project "C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\GP3 Coursework\GP3 Coursework.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:05.09
+Time Elapsed 00:00:09.85
