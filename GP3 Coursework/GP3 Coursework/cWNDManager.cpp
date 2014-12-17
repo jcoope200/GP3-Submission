@@ -12,6 +12,7 @@ cWNDManager.cpp
 #include "wglext.h"
 #include "windowOGL.h"
 #include "GameConstants.h"
+#include "CXBOXController.h"
 
 cWNDManager* cWNDManager::pInstance = NULL;
 
@@ -29,6 +30,7 @@ cWNDManager::cWNDManager()
 	m_winOGL = NULL;
 	m_hinstance = NULL;
 	m_lastTime = 0;
+	
 }
 /*
 =================================================================================
@@ -172,6 +174,7 @@ void cWNDManager::setupPixelFormat(void)
 LRESULT CALLBACK cWNDManager::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	cWNDManager* theWindow = NULL;
+	
 	switch (uMsg)
 	{
 	case WM_CREATE:         // window creation
@@ -251,9 +254,12 @@ LRESULT CALLBACK cWNDManager::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
 		}
 		if (wParam == VK_DOWN) //If the Down Arrow key was pressed
 		{
+			CXBOXController* xbox;
+			xbox = new CXBOXController(1);
 			//glTranslatef(0.0f, 0.0f, -3.0f);
 			translationZ = -2.0f;
 		}
+		
 		if (wParam == VK_SPACE) //If the Down Arrow key was pressed
 		{
 			//fire a shot

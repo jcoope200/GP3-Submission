@@ -1,12 +1,10 @@
-﻿Build started 16/12/2014 20:20:09.
+﻿Build started 17/12/2014 13:04:29.
      1>Project "C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\GP3 Coursework\GP3 Coursework.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt cEnemy.cpp cWNDManager.cpp main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
-     1>c:\users\owner\documents\github\gp3-submission\gp3 coursework\gp3 coursework\main.cpp(129): warning C4309: 'argument' : truncation of constant value
-         cWNDManager.cpp
-         cEnemy.cpp
-         Generating Code...
+     1>c:\users\owner\documents\github\gp3-submission\gp3 coursework\gp3 coursework\main.cpp(131): warning C4309: 'argument' : truncation of constant value
+     1>c:\users\owner\documents\github\gp3-submission\gp3 coursework\gp3 coursework\main.cpp(165): warning C4554: '&' : check operator precedence for possible error; use parentheses to clarify precedence
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\Debug\GP3 Coursework.exe" /INCREMENTAL /NOLOGO glut32.lib "glm-0.3.2Lib.lib" libdrawtext.lib glew32.lib glew32s.lib freetype.lib OpenAL32.lib alut.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\Debug\GP3 Coursework.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\owner\Documents\GitHub\GP3-Submission\GP3 Coursework\Debug\GP3 Coursework.lib" /MACHINE:X86 Debug\cEnemy.obj
          Debug\cLaser.obj
@@ -15,6 +13,7 @@
          Debug\cPlayer.obj
          Debug\cSound.obj
          Debug\cWNDManager.obj
+         Debug\CXBOXController.obj
          Debug\GameConstants.obj
          Debug\main.obj
          Debug\windowOGL.obj
@@ -23,4 +22,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:05.88
+Time Elapsed 00:00:02.06

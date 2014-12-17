@@ -9,6 +9,7 @@ cWNDManager.h
 
 #include <windows.h>
 #include "windowOGL.h"
+#include "CXBOXController.h"
 
 
 class cWNDManager
@@ -32,7 +33,7 @@ public:
 
 	float getElapsedSeconds();
 	static cWNDManager* getInstance();
-
+	
 
 private:
 	static cWNDManager* pInstance;

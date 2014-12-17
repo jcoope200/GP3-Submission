@@ -72,6 +72,7 @@
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cSound.h" />
     <ClInclude Include="cWNDManager.h" />
+    <ClInclude Include="CXBOXController.h" />
     <ClInclude Include="GameConstants.h" />
     <ClInclude Include="cModel.h" />
     <ClInclude Include="windowOGL.h" />
@@ -84,6 +85,7 @@
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cSound.cpp" />
     <ClCompile Include="cWNDManager.cpp" />
+    <ClCompile Include="CXBOXController.cpp" />
     <ClCompile Include="GameConstants.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="windowOGL.cpp" />

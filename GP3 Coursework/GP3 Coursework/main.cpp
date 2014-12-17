@@ -14,6 +14,7 @@
 #include "cPlayer.h"
 #include "cLaser.h"
 #include "cSound.h"
+#include "CXBOXController.h"
 #include <vector>
 #include <time.h>
 
@@ -101,6 +102,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		cEnemy* aDynamite = new cEnemy();
 		aDynamite->randomise();
 		aDynamite->setMdlDimensions(theDynamite.getModelDimensions());
+		aDynamite->setScale(glm::vec3(5, 5, 5));
 		dynamiteList.push_back(aDynamite);
 	}
 	
@@ -143,6 +145,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 	//deathFX.createContext();
 	deathFX.loadWAVFile("Audio/goofy.wav");
 
+	//create an instance of the xbox controller class and assign it to player 1
+	CXBOXController* gamepad;
+	gamepad = new CXBOXController(1);
+	
 	//This is the mainloop, we render frames until isRunning returns false
 	while (pgmWNDMgr->isWNDRunning())
 	{
@@ -156,16 +162,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		if (topDown == true)
+		if (topDown == true && gamepad->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_Y)
 		{
-			//if Q has been pressed while in the first person camera, switch to the top down camera
+			//if Q (Y on Xbox controller) has been pressed while in the first person camera, switch to the top down camera
 			//200 refers to the zoom, the eye is 200 units on the Y away from the camera's target
 			//1 refers to the up vector on the Z axis
 			gluLookAt(0, 200, 0, 0, 0, 0, 0, 0, 1);
 		}
 		else
 		{
-			//if Q has been pressed while in the top down camera, switch to the first person camera
+			//if Q (Y on Xbox controller) has been pressed while in the top down camera, switch to the first person camera
 			//FPScam is an object created to always rotate with where the player is facing
 			//pos is an object created to always stay on the player's position
 			//combined, the two objects produce a lookAt that follows the front of the ship
@@ -202,16 +208,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		thePlayer.update(elapsedTime);
 
 		// Load Sound
-		if (bgmPlaying == false)
+		if ((fire || gamepad->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B) && bgmPlaying == false)
 		{
 			//if E was pressed while the background music wasn't playing
+			//or if it was B on the Xbox controller
 			themeMusic.playAudio(AL_FALSE);
 		}
-
+		gamepad->Vibrate();
 		////are we shooting?
-		if (fire && dead == false)
+		if ((fire || gamepad->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A) && dead == false)
 		{
 			//if we're shooting and we're not dead, instantiate a laser object
+			//we can shoot with the A button on the Xbox controller too
 			//give the object a direction and rotation based on where the player is facing using sine and cosine
 			//scale the laser and add the firing speed
 			//push the laser back in the list and set fire to false
@@ -233,6 +241,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 			laserList.push_back(laser);
 			fire = false;
 			firingFX.playAudio(AL_FALSE);
+			gamepad->Vibrate(65535, 65535);
 		}
 
 
@@ -289,6 +298,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 				//reduce our health by one and play the hit audio
 				(*indexDynamite)->setIsActive(false);
 				health = health - 1;
+				gamepad->Vibrate(65535, 65535);
 				deathFX.playAudio(AL_FALSE);
 				break;
 			}
@@ -365,21 +375,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdLine, 
 		//set the first string overlay at this position
 		//it is a constant string so that the game's output can use it to display
 		//this first one represents the score
-		glTranslatef(0, 720, 0);
+		glTranslatef(50, 680, 0);
 		std::string scoreString = "Dead Jigglypuffs: " + std::to_string(score);
 		char const *ourScore = scoreString.c_str();
 		dtx_string(ourScore);
 
 		//this translate is relative to the first string
 		//this string represents our health
-		glTranslatef(800, 0, 0);
+		glTranslatef(500, 0, 0);
+		//std::string healthString = "Blue Falcon Health: " + std::to_string(health);
 		std::string healthString = "Blue Falcon Health: " + std::to_string(health);
 		char const *ourHealth = healthString.c_str();
 		dtx_string(ourHealth);
 
 		//this translate is relative to the second string
 		//this string represents a message to the player
-		glTranslatef(-600, -50, 0);
+		glTranslatef(-400, -70, 0);
 		if (dead == false && score < 10)
 		{
 			//if we aren't dead and we haven't killed all the enemies
